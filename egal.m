@@ -1,3 +1,16 @@
+function[k]= egal(p,X,Y)
+%% first argument is the quotient max(price)/min(price)
+% the second one is X and the third one Y
+M1=unique(X(:,1));
+M2=unique(X(:,2));
+M3=unique(X(:,3));
+M4=unique(X(:,4));
+M5=unique(X(:,5));
+n1=size(M1);
+n2=size(M2);
+n3=size(M3);
+n4=size(M4);
+n5=size(M5);
 k=0;
 for i1=1:n1
     L1=X(:,1)==M1(i1,1);
@@ -36,4 +49,3 @@ for i1=1:n1
         end
     end
 end
-k
