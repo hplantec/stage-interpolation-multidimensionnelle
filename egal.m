@@ -1,6 +1,9 @@
 function[k]= egal(p,X,Y)
-%% first argument is the quotient max(price)/min(price)
+%% X and Y must be define
+%first argument p is the quotient max(price)/min(price)
 % the second one is X and the third one Y
+% the function egal return each set of indices having same values of
+% criters but different prices, and then the numbers of these sets
 M1=unique(X(:,1));
 M2=unique(X(:,2));
 M3=unique(X(:,3));
