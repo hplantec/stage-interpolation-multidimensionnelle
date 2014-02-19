@@ -1,4 +1,6 @@
-function a= plottrans()
+function a= plottrans(varargin)
+load datav2.mat
+
 p=inputParser;
 
 
@@ -8,8 +10,8 @@ defaultlim=0.1;
 defaultcriterium='hauteur';
 expectedcriterium={'panneaux','hauteur','puissance','RC/RP','sites','dates'};
 
-defaultreference='average';
-expectedreference={'average','most'};
+defaultreference='mean';
+expectedreference={'mean','most'};
 
 defaultyear=1;
 %defaultnoise=0;
@@ -17,60 +19,55 @@ defaultyear=1;
 
 addOptional(p,'coef',defaultcoef,@isnumeric);
 addOptional(p,'lim',defaultlim,@isnumeric);
-addParameter(p,'criterium',defaultcriterium);
-addParameter(p,'reference',defaultreference);
-addOptional(p,'year',@isnumeric);
+addParamValue(p,'criterium',defaultcriterium);
+addOptional(p,'year',defaultyear,@isnumeric);
 %addOptional(p,'noise',@isnumeric);
+addOptional(p,'reference',defaultreference,@(x) any(validatestring(x,expectedreference)));
 
-parse(p,criterium,varargin{:});
-parse(p,coef,varargin{:});
-parse(p,lim,varargin{:});
-parse(p,reference,varargin{:});
-parse(p,year,varargin{:});
+parse(p,varargin{:});
 
 Xn=zscore(X);
 
-if p.Results.reference='average'
+if p.Results.reference=='mean'
     for i=1:2614
 Xm(i,1:7)=[Xn(i,1) 0 0 0 Xn(i,5) Xn(i,6) 0];
     end
 end
-if reference='most'
+if p.Results.reference=='most'
     for i=1:2614
         Xm(i,1:7)=[Xn(i,1) -0.4533 -1.1313 -0.0934 Xn(i,5) Xn(i,6) 0.2193];
     end
 end
 
-if criterium='hauteur'
+if isequal(p.Results.criterium,'hauteur')==1
     c=3;
         Xm(:,3)=Xn(:,3);
 end
-if criterium='panneaux'
+if isequal(p.Results.criterium,'panneaux')==1
     c=2;
         Xm(:,2)=Xn(:,2);
 end
-if criterium='puissance'
+if isequal(p.Results.criterium,'puissance')==1
     c=4;
         Xm(:,4)=Xn(:,4);
 end
-if criterium='RC/RP'
+if isequal(p.Results.criterium,'RC/RP')==1
     c=5;
         Xm(:,5)=Xn(:,5);
 end
-if criterium='sites'
+if isequal(p.Results.criterium,'sites')==1
     c=6;
         Xm(:,6)=Xn(:,6);
 end
-if criterium='dates'
+if isequal(p.Results.criterium,'dates')==1
     c=7;
         Xm(:,7)=Xn(:,7);
 end
 
-if year<=1;
-    y=year;
-end
-if year>=2012 & year<=2015
-    y=year-2011;
+if p.Results.year<=4;
+    y=p.Results.year;
+elseif p.Results.year>=2012 & p.Results.year<=2015
+    y=p.Results.year-2011;
 end
 
 Xgraphe=[];
@@ -78,8 +75,8 @@ Ygraphe=[];
 
 
 for i=1:2614
-    T(i,1)=sum((Xm(i,:)-Xn(i,:)).^2);
-    if T(i,1)>=lim
+    T(i,1)=exp(-sum((Xm(i,:)-Xn(i,:)).^2)/p.Results.coef);
+    if T(i,1)>=p.Results.lim
 Xgraphe(size(Xgraphe,1)+1,1)=X(i,c);
 Ygraphe(size(Ygraphe,1)+1,1)=Y(i,y);
     end
@@ -92,9 +89,9 @@ patch(0,0,1);
 
 hold on
 
-for i=1:size(X2,1)
-    xC=X2(i,c);
-    yC=Y(i,y);
+for i=1:size(Xgraphe,1)
+    xC=Xgraphe(i,1);
+    yC=Ygraphe(i,1);
     x =[xC-1;xC;xC+1;xC];
     y =[yC;yC-100;yC;yC+100];
     p=patch(x,y,z,'b','EdgeColor','none');

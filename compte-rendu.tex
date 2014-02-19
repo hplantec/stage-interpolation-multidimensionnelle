@@ -1,11 +1,21 @@
-\documentclass[a4paper, 11pt]{article}
-\usepackage[utf8]{inputenc}
+%\documentclass[a4paper,11pt]{article}
+%\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
+%\usepackage{lmodern}
+%\usepackage{graphicx}
+%\usepackage{subfigure}
+
+\documentclass{article}
+\usepackage[frenchb]{babel}
 \usepackage[T1]{fontenc}
-\usepackage{lmodern}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{lastpage}
+\usepackage{times}
+\usepackage{fullpage}
 \usepackage{graphicx}
-\usepackage[french]{babel}
-\usepackage{subfigure}
-\usepackage{amsmath, amsfonts, amssymb}
 
 \setlength{\textheight}{24.2cm}
 \setlength{\textwidth}{16.0cm}
@@ -23,29 +33,61 @@
 
 \section{Mercredi 22/01}
 
-	PremiÃ¨re sÃ©ance, il y a eu une prise de contact entre Emile Baptiste et HoÃ«l afin de jeter les bases du stage, prÃ©sentations, prÃ©sentation du projet, nous avons Ã©galement lÃ©gÃ¨rement survolÃ© les procÃ©dÃ©s que nous allons mettre en oeuvre durant cette pÃ©riode.
-   Puis nous avons travaillÃ© sur l'outil Matlab afin de dÃ©terminer certaines caractÃ©ristiques des donnÃ©es cf stage1.m, dans le but de voir ce qui Ã©tait le plus pertinent, et de rÃ©flÃ©chir si nous aurions Ã  demander d'autres informations Ã  Tdf, et le cas Ã©chÃ©ant lesquelles.
+	Première séance, il y a eu une prise de contact entre Emile, Baptiste et Hoël afin de jeter les bases du stage, présentations, présentation du projet, nous avons également légèrement survolé les procédés que nous allons mettre en oeuvre durant cette période.
+
+   Puis nous avons travaillé sur l'outil Matlab afin de déterminer certaines caractéristiques des donnees cf stage1.m, dans le but de voir ce qui était le plus pertinent, et de réfléchir si nous aurions à demander d'autres informations à  Tdf, et le cas échéant lesquelles.
 
 
 \section{Vendredi 24/01}
 
-	Prise de contact de Laure quivy avec les Ã©tudiants, les premiÃ¨res estimation de dates ont Ã©tÃ© jetÃ©es, un code grossier devrait Ãªtre fourni pour le mois de Mai (TDF a une rÃ©union concernant les tarifs, ils aimeraient prÃ©senter Ã§a Ã  ce moment lÃ ), puis si on peut l'amÃ©liorer, continuer pour ne fournir une version plus performante en Juin ou Juillet.
-	Mise en place du Git hub en commun, vision ou rÃ©vision de Matlab, mÃ©thodes d'interpolation, et de regression pour les deux Ã©tudiants.
+	Prise de contact de Laure Quivy avec les étudiants, les premières estimation de dates ont été jetées, un code grossier devrait être fourni pour le mois de Mai (TDF a une réunion concernant les tarifs, ils aimeraient présenter ça à  ce moment là), puis si on peut l'améliorer, continuer pour ne fournir une version plus performante en Juin ou Juillet.
+
+	Mise en place du Git hub en commun, vision ou révision de Matlab, méthodes d'interpolation, et de régression pour les deux étudiants.
 
 
 \section{Mercredi 29/01}
 
 \subsection{Réunion à TDF}
 	Aujourd'hui nous avons eu la réunion avec Olivier Marzouk de TDF, pour lui présenter les premières analyses de données.
+
 	Apparemment la donnée qui sensiblement pourrait nous manquer porte sur la date de construction des différents sites, il faut donc voir par la suite si elle explique les points étranges. Nous n'aurons pas accès au code du logiciel de l'ARCEP, mais une partie du calcul est disponible en ligne (à voir sur le lien suivant que nous a fourni Olivier: https://docs.google.com/open?id=0B4dfKcelvACpNFJIdDN2SEFXN00).
-	Le premier nombre de panneau serait à priori inutile, c'est plutôt le nombre maximum de panneau (donc utiliser X(:,2) plutôt que X(:,1)).
+
+	Le premier nombre de panneau serait à priori inutile, c'est plutôt le nombre maximum de panneaux (donc utiliser X(:,2) plutôt que X(:,1)).
 
 
 \subsection{Hors réunion}
-	Il reste à vérifier si l'apparence de droites des graphes scatter(X(:,3),Y(:,1)) exhibées par Baptiste restent valables en faisant varier les valeurs de X(:,2), X(:,4) et X(:,5). Si c'est le cas, il ne reste plus qu'à trouver ce qui fait varier le coefficient directeur de la droite, et on obtient une relation affine entre le prix et les critères... ce qui parait trop simple.
+	Il reste à vérifier si l'apparence de droites des graphes scatter(X(:,3),Y(:,1)) exhibées par Baptiste reste valable en faisant varier les valeurs de X(:,2), X(:,4) et X(:,5). Si c'est le cas, il ne reste plus qu'à trouver ce qui fait varier le coefficient directeur de la droite, et on obtient une relation affine entre le prix et les critères... ce qui parait trop simple.
+
 	Les valeurs étranges ont été envoyées à Olivier afin qu'il vérifie qu'elles ne sont pas fausses (l'erreur est humaine).
-	Hoël a exhibé les sites qui apparaissent sur les graphes étranges (du moins ceux qui sautent au yeux), c'est-à-dire ceux qui ont des caractéristiques proches d'autres sites mais qui présentent avec eux un écart de prix d'au moins 25%. Il y en a une dizaine.
-	Baptiste a écrit un script permettant d'exhiber toutes les configs qui ont les mêmes caractéristiques mais pas le même prix, il y a 391 groupes comprenant chacun au moins 2 configs qui correspondent à cette description. Celà confirme qu'il nous faut d'autres critères. 
+
+	Hoël a exhibé les configs qui apparaissent étranges sur les graphes (du moins celles qui sautent au yeux), c'est-à-dire ceux qui ont des caractéristiques proches d'autres sites mais qui présentent avec eux un écart de prix d'au moins 25%. Il y en a une dizaine.
+
+	Baptiste a écrit un script permettant d'exhiber toutes les configs qui ont les mêmes caractéristiques mais pas le même prix, il y a 391 groupes comprenant chacun au moins 2 configs qui correspondent à cette description. Celà confirme qu'il nous faut d'autres critères.
+
+
+\section{Vendredi 14/02}
+	Aujourd'hui Hoël a fait de la biblio sur "The Elements of statistical learning" sur le régression et la méthode des moindres carrés.
+	Baptiste de son côté a étudié la régression par noyau (Kernel regression).
+
+	De plus des plots avec transparence (basée sur la distance à un point de référence après normation) ont été tracés en fonction de chacune des coordonnées, avec deux points de référence différents: la ref mean, où la référence est le point nul (sauf pour la coordonnées qui varie et pour celles qui paraissent moins utiles ie colonnes 1 5 et 6), et la ref max, où les coordonnées sont celles les plus représentées indépendamment.
+
+	Le prix ne semble pas influencé par les données puissance et date de déploiement (4 et 7). Le nombre de panneaux et la hauteur semblent par contre intéressants..
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[width=7.5cm]{prix_date.png}
+\includegraphics[width=7.5cm]{prix_puissance.png}
+\end{center}
+%\caption{l\'{e}gende}
+%\label{r\'{e}f\'{e}rence pour renvoyer \`{a} la figure}
+\end{figure} 
 	
+\section{Mercredi 19/02}
+	Aujourd'hui un script avec arguments optionnels a été écrit afin de faire des plots avec transparence bien plus facilement. On a ainsi exhibé une certaine corrélation entre la puissance et le prix (simple croissance globale), et que le réseau RC ne comprenait pas de config dont le prix est très élevé.
+
+	D'autre part Hoël a fait de la biblio dur les splines. Il faut s'intéresser aux smoothing splines pour obtenir une résistance au bruit sur les données. Il y a alors une fonction à minimiser, comportant des moindres carrés et un poids sur l'intégrale de la dérivée seconde. Le problème étant qu'il n'y a pas d'algorithme fonctionnant sur tous les datas sets donc ce sera du cas par cas. Les splines sont déjà codées sous matlab (cf fit pchip etc...) donc il faudra regarder ce que ça donne. (pour une base cf smoothing splines sur google)
+
+	Le code excel de l'ARCEP présente énormément de données que TDF ne nous a pas fourniées, dont une bonne partie en libre accès sur le document en ligne. Il faut donc regarder si ces données peuvent avoir une influence (rappelons nous qu'il nous manque un élément déterminant, et que celà étant donné on se rapprocherait énormément d'un calcul multilinéaire...).
+
 
 \end{document}
