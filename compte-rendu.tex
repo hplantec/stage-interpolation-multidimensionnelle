@@ -85,9 +85,38 @@
 \section{Mercredi 19/02}
 	Aujourd'hui un script avec arguments optionnels a été écrit afin de faire des plots avec transparence bien plus facilement. On a ainsi exhibé une certaine corrélation entre la puissance et le prix (simple croissance globale), et que le réseau RC ne comprenait pas de config dont le prix est très élevé.
 
-	D'autre part Hoël a fait de la biblio dur les splines. Il faut s'intéresser aux smoothing splines pour obtenir une résistance au bruit sur les données. Il y a alors une fonction à minimiser, comportant des moindres carrés et un poids sur l'intégrale de la dérivée seconde. Le problème étant qu'il n'y a pas d'algorithme fonctionnant sur tous les datas sets donc ce sera du cas par cas. Les splines sont déjà codées sous matlab (cf fit pchip etc...) donc il faudra regarder ce que ça donne. (pour une base cf smoothing splines sur google)
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[width=7.5cm]{plottranspuis.png}
+\end{center}
+\end{figure} 
 
-	Le code excel de l'ARCEP présente énormément de données que TDF ne nous a pas fourniées, dont une bonne partie en libre accès sur le document en ligne. Il faut donc regarder si ces données peuvent avoir une influence (rappelons nous qu'il nous manque un élément déterminant, et que celà étant donné on se rapprocherait énormément d'un calcul multilinéaire...).
+	D'autre part Hoël a fait de la biblio sur les splines. Il faut s'intéresser aux smoothing splines pour obtenir une résistance au bruit sur les données. Il y a alors une fonction à minimiser, comportant des moindres carrés et un poids sur l'intégrale de la dérivée seconde. Le problème étant qu'il n'y a pas d'algorithme fonctionnant sur tous les datas sets donc ce sera du cas par cas. Les splines sont déjà codées sous matlab (cf fit pchip etc...) donc il faudra regarder ce que ça donne. (pour une base cf smoothing splines sur google)
+
+	Le code excel de l'ARCEP présente énormément de données que TDF ne nous a pas fournies, dont une bonne partie en libre accès sur le document en ligne. Il faut donc regarder si ces données peuvent avoir une influence (rappelons nous qu'il nous manque un élément déterminant, et que celà étant donné on se rapprocherait énormément d'un calcul multilinéaire...).
+
+	Baptiste a écrit plusieurs scripts permettant de faire des regressions kernels sur les datasets 
+
+\section{Mercredi 26/02}
+	Aujourd'hui, une hypothèse sur le temps de calcul phénoménal du code de l'Arcep a été émise, après s'être rendu compte que le fichier mettait plusieurs minutes rien que pour être ouvert.. On suppose qu'il a beaucoup trop d'appels, et qu'il est beaucoup trop compliqué, et qu'on pourrait obtenir une précision suffisante en enlevant beaucoup de critères qu'il considère.
+
+	Dû à la complexité dudit fichier, il parait complexe de travailler dessus (ne serait ce que d'extraire des pages à isoler) car libre office ne supporte pas de fichiers aussi lourds, il faudrait donc essayer avec excel.
+
+	Le fichier permettant de plotter avec transparence a été amélioré, en refaisant les légendes, une option pour choisir sa figure, et la taille des éléments plottés a été refaite. Il parait donc plus ou moins complet pour l'instant.
+
+	Une page semblant intéressante du fichier Excel a été extraite (d'ailleurs il faut des licences Excel car on arrive aux limites de libre office), mais n'a pas été transférée sous matlab, parce qu'il y a plus de 200 critères à prendre en compte, donc c'est du travail lourd à faire à la main.
+
+	La priorité actuelle est de travailler sur de la regression Kernel, dans cette optique le script de Baptiste sur le premier script kernel linexp a été corrigé. 
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[width=7.5cm]{kernel_regression_on_random_values.png}
+\end{center}
+\end{figure} 
+
+	Maintenant il faut écrire différents scripts permettant de lancer un certain nombre (à entrer en tant que paramètre) de kernels en prenant différentes parties des datasets pour train et test. Puis calculant l'erreur sur le data test, faisant la moyenne de ces erreurs sur des valeurs lambda, sigma, et mu données. Puis grâce à des boucles déterminer les valeurs de lambda, sigma, et mu optimales. Pour l'instant on fait des boucles avec un nombre restreint de valeurs pour les paramètres, pour les faire tourner sur nos ordinateurs, puis on fera de plus grosses boucles pour les faire tourner sur le serveur pour améliorer les résultats.
+
+	Le script séparant de manière aléatoire des valeurs de X et Y a été écrit.
 
 
 \end{document}
