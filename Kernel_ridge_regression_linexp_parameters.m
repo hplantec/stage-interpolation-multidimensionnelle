@@ -1,11 +1,14 @@
+%% This fonction return the mean square_error of data inputs
+% The inputs of this function are X , Y , the coef of the smoothness lambda
+% , the standard deviation sigma , the weight of exp mu , and then the
+% number of data sets on which this function calculate the mean error nv
+% and the proportion p of trained elements out of all the elements
+
 function[err] = Kernel_ridge_regression_linexp_parameters (X , Y , lambda , sigma , mu , nv , p)
 
-k = @(x,y) x*y + mu*exp(-(x-y)^2/(2*sigma^2));
+k=@(x,y) x*y' + mu*exp(-(x*ones(1,size(y,1))-ones(size(x,1),1)*y').^2/(2*sigma^2));
 n = size(X,1); pn = floor(p*n);
-Ktrtr = zeros(pn,pn);
-Ktetr = zeros(n-pn,pn);
 erreur = zeros(nv,1);
-s = 0;
 
 for s = 1 : nv
     L1 = transpose(randperm(n));
@@ -18,19 +21,11 @@ for s = 1 : nv
     Xte = X(L,1);
     Yte = Y(L,1);
     
-    for i = 1 : pn
-        for j = 1 : pn
-            Ktrtr(i,j) = k(Xtr(i),Xtr(j));
-        end
-    end
-    A = (Ktrtr+(lambda*pn*eye(pn)))\Ytr;
-    for i = 1 : (n-pn)
-        for j = 1 : pn
-            Ktetr(i,j) = k(Xte(i),Xtr(j));
-        end
-    end
+    Ktrtr=k(Xtr,Xtr);
+    A=(Ktrtr+(lambda*pn*eye(pn)))\Ytr;
+    Ktetr=k(Xte,Xtr);
     erreuri = Yte-Ktetr*A;
-    erreur(i) = mean(erreuri.*erreuri);
+    erreur(s) = mean(erreuri.*erreuri);
 end
 
 err = mean(erreur);
