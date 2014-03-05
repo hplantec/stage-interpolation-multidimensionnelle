@@ -118,5 +118,48 @@
 
 	Le script séparant de manière aléatoire des valeurs de X et Y a été écrit.
 
+\section{Vendredi 28/02}
+	Baptiste est arrivé avec une version du script linexp_parameters qui prend en argument les input de la fonction kernel, et qui sort l'erreur de la regression. Ce script sera utile pour le calcul des coefficients optimaux.
+
+	Il a été déterminé que les boucles de ce script prennent beaucoup trop de temps de calcul (de l'ordre du mois?). De plus il faut passer le script de regression pour prendre en compte plusieurs dimensions en entrée.
+
+	Etant donné qu'il faut faire une estimation par majoration il faut revoir la fonction d'erreur plutôt que les moindres carrés:
+les moindres carrés donnent le même poids au majoration et minoration, il faut éviter ça en mettant plus de poids aux erreurs par minoration. On obtient alors une approximation qui n'est pas du tout par majoration:
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[width=7.5cm]{Kernel_ridge_regression_linexp_prix_hauteur.png}
+\end{center}
+\caption{On voit que la regression ne majore pas du tout notre data set}
+\end{figure} 
+
+
+
+\section{Mercredi 05/03}
+
+	Baptiste a expliqué l'essentiel de la théorie kernel à Hoël.
+
+	Baptiste a retapé tous les scripts afin de diminuer le temps de calcul et que ce soit plus lisible (commentaires, tout sous forme de fonctions, tout avec des arguments définis dans le script, etc...). Hoël a écrit un script pour déterminer (une fois les autres scripts finalisés) quelles seront les valeurs optimales de lambda sigma et mu. Ce script ne fonctionne peut être pas, car le temps de calcul est beaucoup trop long donc on ne peut pas le lancer pour vérifier (le linexp parameter tourne en 10 secondes, il est appelé 20*20*20*3=24000 fois par le script de calcul de critères optimaux...donc approximativement 3 jours de calcul), il faudra donc le lancer sur le serveur.
+
+	Il faut,pour l'erreur, une fonction croissante sur R+ et décroissante sur R-, c'est logique car il faut quand même minimiser les grandes distances. On chercher aussi à ce que les erreurs sur une petite plage de R+ aient un faible poids (penser à x^n avec n grand). Puis que la pente sur R- soit importante de manière à vouloir minimiser ces écarts là (penser à une fonction du type exp(x^2)-1) puis mettre un poids intéressant sur de grandes distances de R+ (le x^n marcherait bien à cet endroit).
+
+	Sauf que pour tout ça il faut un test si x est positif ou négatif, ce qui emepche de faire l'inversion de matrice qui permet de faire la regression. Il faudrait donc plutôt faire une somme de deux fonctions, tout en gardant les critères précédents (minimum en zéro, faible poids au début de R+ etc...).
+
+	D'autre part le kernel cub_exp serait plus intéressant que le lin_exp car il colle mieux à l'évolution générale des prix par rapport à la hauteur.
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[width=3.5cm]{Kernel_ridge_regression_linexp_prix_hauteur.png}
+\end{center}
+\caption{Ici on a du lin_exp qui s'éloigne fortement de notre data set pour de fortes hauteurs}
+\end{figure} 
+\begin{figure}[!ht]
+
+\begin{center}
+\includegraphics[width=7.5cm]{Kernel_ridge_regression_linexp_prix_hauteur.png}
+\end{center}
+\caption{Et là du cub_exp qui colle bien le prix pour de fortes hauteurs}
+\end{figure} 
+
 
 \end{document}
