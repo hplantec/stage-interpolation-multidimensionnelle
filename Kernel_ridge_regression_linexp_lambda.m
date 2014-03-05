@@ -1,32 +1,19 @@
-%% The example of the Kernel_ridge_regression depending to lambda
+%% The example of the Kernel_ridge_regression_linexp depending on lambda
 
-Xtr=columnA;
-Ytr=columnB;
-Xte=transpose(735595 : 735650);
+function[] = Kernel_ridge_regression_linexp_lambda (Xtr , Ytr , Xte , lambdamin , lambdamax ,sigma , mu)
+
 n=size(Xtr,1);
-Ktrtr=rand(n,n);
 
-mu=10;
-sigma=3;
-for lambda = 0.0 : 0.0001 : 0.002
+for lambda = lambdamin : (lambdamax-lambdamin)/20 : lambdamax
     
-    k=@(x,y) x*y + mu*exp(-(x-y)^2/(2*sigma^2));
+    k=@(x,y) x*y' + mu*exp(-(x*ones(1,size(y,1))-ones(size(x,1),1)*y').^2/(2*sigma^2));
 
-    for i = 1 : n
-        for j = 1 : n
-            Ktrtr(i,j)=k(Xtr(i),Xtr(j));
-        end
-    end
-    A= (Ktrtr+(lambda*n*eye(n)))\Ytr;
-    m=size(Xte,1);
-    Ktetr=rand(m,n);
-    for i = 1 : m
-        for j = 1 : n
-            Ktetr(i,j)=k(Xte(i),Xtr(j));
-        end
-    end
+    Ktrtr=k(Xtr,Xtr);
+    A=(Ktrtr+(lambda*n*eye(n)))\Ytr;
+    Ktetr=k(Xte,Xtr);
     Yte=Ktetr*A;
-    plot(Xtr,Ytr)
+    
+    scatter(Xtr,Ytr)
     hold on
     plot(Xte,Yte,'r')
     title(['lamba= ', num2str(lambda)])
