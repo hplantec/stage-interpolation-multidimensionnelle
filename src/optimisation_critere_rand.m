@@ -1,4 +1,4 @@
-function out= optimisation_critere_rand(varargin)
+function [out1,out2]= optimisation_critere_rand(varargin)
 %This function takes multiple optionnal arguments and send back the optimal
 %parameters which minimize the error between the kernel and the train data.
 %In order to calculate the most precise parameters, we take random values
@@ -6,6 +6,8 @@ function out= optimisation_critere_rand(varargin)
 %an input called accuracy) and we calculate the error for those values. We
 %take the minimum and zoom on a smaller interval around this minimum (a
 %ball in R3) a number of times called step.
+
+tic;
 
 load datav2.mat
 
@@ -61,6 +63,10 @@ sigmaf=(Sigma(1)+Sigma(2))/2;
 muf=(Mu(1)+Mu(2))/2;
 l1=[LAMBDA(1) SIGMA(1) MU(1)];
 l2=[LAMBDA(end) SIGMA(end) MU(end)];
+errall=[];
+lambdaall=[];
+sigmaall=[];
+muall=[];
 
 
 % Now we launch the loop which iterate on the number of steps we'e decided.
@@ -77,17 +83,40 @@ for l=1:step
        S=SIGMA(1)+(SIGMA(2)-SIGMA(1))*rand;
        M=MU(1)+(MU(2)-MU(1))*rand;
        errtemp=Kernel_ridge_regression_cubexp_parameters (X , Y , L , S , M , nv , prop);
+       errall(size(errall,1)+1,1)=errtemp;
+       lambdaall(size(lambdaall,1)+1,1)=L;
+       sigmaall(size(sigmaall,1)+1,1)=S;
+       muall(size(muall,1)+1,1)=M;
        if errtemp<err
            err=errtemp;
-           lambdaf=L(i);
-           sigmaf=S(i);
-           muf=M(i);
+           lambdaf=L;
+           sigmaf=S;
+           muf=M;
        end
    end
 end
 
-out=[err,lambdaf,sigmaf,muf];
+figure(1);
+subplot(2,2,1);
+scatter(lambdaall,errall);
+xlabel('valeurs de lambda');
+ylabel('erreurs obtenues');
 
+subplot(2,2,2);
+scatter(sigmaall,errall);
+xlabel('valeurs de sigma');
+ylabel('erreurs obtenues');
+
+subplot(2,2,3);
+scatter(muall,errall);
+xlabel('valeurs de mu');
+ylabel('erreurs obtenues');
+
+
+out1=[err,lambdaf,sigmaf,muf];
+out2=[errall,lambdaall,sigmaall,muall];
+
+toc;
 
 end
 
