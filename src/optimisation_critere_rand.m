@@ -1,5 +1,11 @@
 function out= optimisation_critere_rand(varargin)
-%This function takes multiple optionnal arguments and send 
+%This function takes multiple optionnal arguments and send back the optimal
+%parameters which minimize the error between the kernel and the train data.
+%In order to calculate the most precise parameters, we take random values
+%of lambda sigma and mu in an interval (the number af those values taken is
+%an input called accuracy) and we calculate the error for those values. We
+%take the minimum and zoom on a smaller interval around this minimum (a
+%ball in R3) a number of times called step.
 
 load datav2.mat
 
@@ -41,40 +47,36 @@ Sigma=p.Results.Sigma;
 Mu=p.Results.Mu;
 step=p.Results.step;
 
-
-%The three following lines are the vectors with the values of lambda,
-%sigma, and mu on which we take random values.
-
-LAMBDA=[Lambda(1):(Lambda(2)-Lambda(1))/20:Lambda(2)];
-SIGMA=[Sigma(1):(Sigma(2)-Sigma(1))/20:Sigma(2)];
-MU=[Mu(1):(Mu(2)-Mu(1))/20:Mu(2)];
+%Here we create the vectors which includes the limits of our intervals for
+%parameters' values.
+LAMBDA=[Lambda(1) Lambda(2)];
+SIGMA=[Sigma(1) Sigma(2)];
+MU=[Mu(1) Mu(2)];
 
 
-% Here we initiate the final values, in order to launch the calculus. The
-% intial error has to be huge so taht it is replaced by the first
-% calculated value.
+% Here we initiate what will be necessary for the loops to begin.
 err=10^10;
 lambdaf=(Lambda(2)+Lambda(1))/2;
 sigmaf=(Sigma(1)+Sigma(2))/2;
 muf=(Mu(1)+Mu(2))/2;
-
-
 l1=[LAMBDA(1) SIGMA(1) MU(1)];
 l2=[LAMBDA(end) SIGMA(end) MU(end)];
 
+
+% Now we launch the loop which iterate on the number of steps we'e decided.
 for l=1:step
     siz=(l2-l1)/10^(l-1);
-    LAMBDA=[lambdaf-size(1)/2:size(1)/20:lambdaf+size(1)/2];
-    SIGMA=[sigmaf-size(2)/2:size(2)/20:sigmaf+size(2)/2];
-    MU=[muf-size(3)/2:size(3)/20:muf+size(3)/2];
+    LAMBDA=[lambdaf-siz(1)/2 lambdaf+siz(1)/2];
+    SIGMA=[sigmaf-siz(2)/2 sigmaf+siz(2)/2];
+    MU=[muf-siz(3)/2 muf+siz(3)/2];
 
-    L=LAMBDA(1,round(rand(1,accuracy)*20+1));
-    S=SIGMA(1,round(rand(1,accuracy)*20+1));
-    M=MU(1,round(rand(1,accuracy)*20+1));
-
-
-   for i=1:size(L,2)
-       errtemp=Kernel_ridge_regression_cubexp_parameters (X , Y , L(i) , S(i) , M(i) , nv , prop);
+% And we launch, inside a step, the kernel script for as many times as
+% we've decided in accuracy.
+   for i=1:accuracy
+       L=LAMBDA(1)+(LAMBDA(2)-LAMBDA(1))*rand;
+       S=SIGMA(1)+(SIGMA(2)-SIGMA(1))*rand;
+       M=MU(1)+(MU(2)-MU(1))*rand;
+       errtemp=Kernel_ridge_regression_cubexp_parameters (X , Y , L , S , M , nv , prop);
        if errtemp<err
            err=errtemp;
            lambdaf=L(i);
