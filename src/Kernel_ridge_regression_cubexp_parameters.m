@@ -10,16 +10,8 @@ k=@(x,y) (x*y').^3 + mu*exp(-(x*ones(1,size(y,1))-ones(size(x,1),1)*y').^2/(2*si
 n = size(X,1); pn = floor(p*n);
 erreur = zeros(nv,1);
 
-for s = 1 : nv
-    L1 = transpose(randperm(n));
-    L2 = transpose(1 : pn);
-    L3 = transpose(pn+1 : n);
-    L = L1(L2,1);
-    Xtr = X(L,1);
-    Ytr = Y(L,1);
-    L = L1(L3,1);
-    Xte = X(L,1);
-    Yte = Y(L,1);
+ for s = 1 : nv
+    [Xtr,Xte,Ytr,Yte]=split(X,Y,0.9);
     
     Ktrtr=k(Xtr,Xtr);
     A=(Ktrtr+(lambda*pn*eye(pn)))\Ytr;

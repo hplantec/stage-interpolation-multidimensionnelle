@@ -56,13 +56,13 @@
 
 
 \subsection{Hors réunion}
-	Il reste à vérifier si l'apparence de droites des graphes scatter(X(:,3),Y(:,1)) exhibées par Baptiste reste valable en faisant varier les valeurs de X(:,2), X(:,4) et X(:,5). Si c'est le cas, il ne reste plus qu'à trouver ce qui fait varier le coefficient directeur de la droite, et on obtient une relation affine entre le prix et les critères... ce qui parait trop simple.
+	Il reste à vérifier si l'apparence de droites des graphes scatter(X(:,3),Y(:,1)) exhibées par Baptiste (cf décompo\_3\_droites\_2015.m) reste valable en faisant varier les valeurs de X(:,2), X(:,4) et X(:,5). Si c'est le cas, il ne reste plus qu'à trouver ce qui fait varier le coefficient directeur de la droite, et on obtient une relation affine entre le prix et les critères... ce qui parait trop simple.
 
 	Les valeurs étranges ont été envoyées à Olivier afin qu'il vérifie qu'elles ne sont pas fausses (l'erreur est humaine).
 
-	Hoël a exhibé les configs qui apparaissent étranges sur les graphes (du moins celles qui sautent au yeux), c'est-à-dire ceux qui ont des caractéristiques proches d'autres sites mais qui présentent avec eux un écart de prix d'au moins 25%. Il y en a une dizaine.
+	Hoël a exhibé les configs qui apparaissent étranges sur les graphes (du moins celles qui sautent au yeux), c'est-à-dire ceux qui ont des caractéristiques proches d'autres sites mais qui présentent avec eux un écart de prix d'au moins $1/4$. Il y en a une dizaine.
 
-	Baptiste a écrit un script permettant d'exhiber toutes les configs qui ont les mêmes caractéristiques mais pas le même prix, il y a 391 groupes comprenant chacun au moins 2 configs qui correspondent à cette description. Celà confirme qu'il nous faut d'autres critères.
+	Baptiste a écrit un script permettant d'exhiber toutes les configs qui ont les mêmes caractéristiques mais pas le même prix (cf egal.m) , il y a 391 groupes comprenant chacun au moins 2 configs qui correspondent à cette description. Celà confirme qu'il nous faut d'autres critères.
 
 
 \section{Vendredi 14/02}
@@ -78,12 +78,12 @@
 \includegraphics[width=7.5cm]{prix_date.png}
 \includegraphics[width=7.5cm]{prix_puissance.png}
 \end{center}
-%\caption{l\'{e}gende}
-%\label{r\'{e}f\'{e}rence pour renvoyer \`{a} la figure}
+%\caption{légende}
+%\label{référence pour renvoyer à la figure}
 \end{figure} 
 	
 \section{Mercredi 19/02}
-	Aujourd'hui un script avec arguments optionnels a été écrit afin de faire des plots avec transparence bien plus facilement. On a ainsi exhibé une certaine corrélation entre la puissance et le prix (simple croissance globale), et que le réseau RC ne comprenait pas de config dont le prix est très élevé.
+	Aujourd'hui un script avec arguments optionnels a été écrit afin de faire des plots avec transparence bien plus facilement (cf plottrans.m). On a ainsi exhibé une certaine corrélation entre la puissance et le prix (simple croissance globale), et que le réseau RC ne comprenait pas de config dont le prix est très élevé.
 
 \begin{figure}[!ht]
 \begin{center}
@@ -95,7 +95,7 @@
 
 	Le code excel de l'ARCEP présente énormément de données que TDF ne nous a pas fournies, dont une bonne partie en libre accès sur le document en ligne. Il faut donc regarder si ces données peuvent avoir une influence (rappelons nous qu'il nous manque un élément déterminant, et que celà étant donné on se rapprocherait énormément d'un calcul multilinéaire...).
 
-	Baptiste a écrit plusieurs scripts permettant de faire des regressions kernels sur les datasets 
+	Baptiste a écrit plusieurs scripts permettant de faire des regressions kernels sur les datasets. (cf kernel\_ridge\_regression\_*.m)
 
 \section{Mercredi 26/02}
 	Aujourd'hui, une hypothèse sur le temps de calcul phénoménal du code de l'Arcep a été émise, après s'être rendu compte que le fichier mettait plusieurs minutes rien que pour être ouvert.. On suppose qu'il a beaucoup trop d'appels, et qu'il est beaucoup trop compliqué, et qu'on pourrait obtenir une précision suffisante en enlevant beaucoup de critères qu'il considère.
@@ -106,7 +106,7 @@
 
 	Une page semblant intéressante du fichier Excel a été extraite (d'ailleurs il faut des licences Excel car on arrive aux limites de libre office), mais n'a pas été transférée sous matlab, parce qu'il y a plus de 200 critères à prendre en compte, donc c'est du travail lourd à faire à la main.
 
-	La priorité actuelle est de travailler sur de la regression Kernel, dans cette optique le script de Baptiste sur le premier script kernel linexp a été corrigé. 
+	La priorité actuelle est de travailler sur de la regression Kernel, dans cette optique le script de Baptiste sur le premier script kernel linexp a été corrigé. (Kernel\_ridge\_regression\_linexp\_parameters.m)
 
 \begin{figure}[!ht]
 \begin{center}
@@ -116,7 +116,7 @@
 
 	Maintenant il faut écrire différents scripts permettant de lancer un certain nombre (à entrer en tant que paramètre) de kernels en prenant différentes parties des datasets pour train et test. Puis calculant l'erreur sur le data test, faisant la moyenne de ces erreurs sur des valeurs lambda, sigma, et mu données. Puis grâce à des boucles déterminer les valeurs de lambda, sigma, et mu optimales. Pour l'instant on fait des boucles avec un nombre restreint de valeurs pour les paramètres, pour les faire tourner sur nos ordinateurs, puis on fera de plus grosses boucles pour les faire tourner sur le serveur pour améliorer les résultats.
 
-	Le script séparant de manière aléatoire des valeurs de X et Y a été écrit.
+	Le script séparant de manière aléatoire des valeurs de X et Y a été écrit. (cf split.m)
 
 \section{Vendredi 28/02}
 	Baptiste est arrivé avec une version du script linexp\_parameters qui prend en argument les input de la fonction kernel, et qui sort l'erreur de la regression. Ce script sera utile pour le calcul des coefficients optimaux.
@@ -143,7 +143,7 @@ les moindres carrés donnent le même poids au majoration et minoration, il faut é
 
 	Il faut,pour l'erreur, une fonction croissante sur R+ et décroissante sur R-, c'est logique car il faut quand même minimiser les grandes distances. On cherche aussi à ce que les erreurs sur une petite plage de R+ aient un faible poids (penser à $x^n$ avec $n$ grand). Puis que la pente sur R- soit importante de manière à vouloir minimiser ces écarts là (penser à une fonction du type $exp(x^2)-1$) puis mettre un poids intéressant sur de grandes distances de R+ (le $x^n$ marcherait bien à cet endroit).
 
-	Sauf que pour tout ça il faut un test si x est positif ou négatif, ce qui emepche de faire l'inversion de matrice qui permet de faire la regression. Il faudrait donc plutôt faire une somme de deux fonctions, tout en gardant les critères précédents (minimum en zéro, faible poids au début de R+ etc...).
+	Sauf que pour tout ça il faut un test si x est positif ou négatif, ce qui empêche de faire l'inversion de matrice qui permet de faire la regression. Il faudrait donc plutôt faire une somme de deux fonctions, tout en gardant les critères précédents (minimum en zéro, faible poids au début de R+ etc...).
 
 	D'autre part le kernel cub\_exp serait plus intéressant que le lin\_exp car il colle mieux à l'évolution générale des prix par rapport à la hauteur.
 
@@ -160,6 +160,36 @@ les moindres carrés donnent le même poids au majoration et minoration, il faut é
 \end{center}
 \caption{Et là du cub\_exp qui colle bien le prix pour de fortes hauteurs}
 \end{figure} 
+
+
+\section{Vendredi 07/03}
+
+	Aujourd'hui Hoël a essayé de réécrire le script de calcul optimal des paramètres de la regression kernel en enlevant les boucles. Pour celà il faut réécrire le script de la regression pour qu'elle prenne des vecteurs en argument pour les paramètres, mais aussi créer une matrice à partir de vecteurs contenant les combinaisons de valeurs possibles parmi ces vecteurs.
+
+
+
+\section{Mercredi 12/03}
+
+	Emile a suggéré qu'au lieu de créer une matrice comprenant toutes les combinaisons, on choisisse de manière aléatoire 1000 combinaisons possibles, puis qu'on lance la regression sur ces valeurs. On obtiendra alors un maillage uniforme de la distribution des paramètres et on diminuera le nombre de calculs (ici par 8, cf optimisation\_parametre\_rand.m). L'inconvénient est que si on trouve plusieurs minima locaux, le bruit fait qu'on ne prendra pas forcément le bon pour "zoomer" sur l'intervalle et relancer les calculs.
+
+	On peut même aller plus loin en faisant de l'optimisation du choix des valeurs, c'est à dire qu'au début le script prend des valeurs aléatoires puis qu'il déduise des valeurs qu'il possède où calculer les prochaines. Le problème est que l'optimisation sur un espace de dimension $2600*2600$ n'est pas envisageable.
+
+	Le script fonctionne avec un maillage uniforme, mais il est toujours trop long pour tourner sur un ordinateur, il prendrait environ 8 jours pour tourner avec les paramètres par défaut.
+
+	Ce script a été lancé sur le serveur, pour un temps de calcul de 2h.
+
+
+\section{Vendredi 14/03}
+
+	On a reçu les résultats des calculs sur le serveur. Le lambda apparait avoir une valeur optimale légèrement supérieure à 1, mu ne doit pas avoir de valeur "moyenne", c'est-à-dire qu'il doit être soit petit soit grand (aux alentours de 1 ou 8) mais pas entre les deux. Et le sigma doit être très grand car il est du même ordre de grandeur que les données, on relance donc les calculs avec un zscore sur les données X afin de pouvoir calculer le sigma optimal. On ne trouve pas de minimum qui sorte du lot, il faut donc affiner le calcul en multidimensionnel.
+
+	Pour ça il faut réécrire le script de Kernel\_cubexp pour qu'il prenne en compte des matrices et non plus des vecteurs. Pour l'instant les meilleurs valeurs trouvées sont:
+
+$\lambda=0.0005$
+
+$\sigma=6.4303$
+
+$\mu=8.1383$.
 
 
 \end{document}
