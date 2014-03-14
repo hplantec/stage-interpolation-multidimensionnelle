@@ -7,7 +7,6 @@ function [out1,out2]= optimisation_critere_rand(varargin)
 %take the minimum and zoom on a smaller interval around this minimum (a
 %ball in R3) a number of times called step.
 
-tic;
 
 load datav2.mat
 
@@ -49,6 +48,8 @@ Sigma=p.Results.Sigma;
 Mu=p.Results.Mu;
 step=p.Results.step;
 
+Xn=zscore(X);
+Yn=zscore(Y);
 %Here we create the vectors which includes the limits of our intervals for
 %parameters' values.
 LAMBDA=[Lambda(1) Lambda(2)];
@@ -75,6 +76,8 @@ for l=1:step
     LAMBDA=[lambdaf-siz(1)/2 lambdaf+siz(1)/2];
     SIGMA=[sigmaf-siz(2)/2 sigmaf+siz(2)/2];
     MU=[muf-siz(3)/2 muf+siz(3)/2];
+    
+    
 
 % And we launch, inside a step, the kernel script for as many times as
 % we've decided in accuracy.
@@ -82,7 +85,7 @@ for l=1:step
        L=LAMBDA(1)+(LAMBDA(2)-LAMBDA(1))*rand;
        S=SIGMA(1)+(SIGMA(2)-SIGMA(1))*rand;
        M=MU(1)+(MU(2)-MU(1))*rand;
-       errtemp=Kernel_ridge_regression_cubexp_parameters (X , Y , L , S , M , nv , prop);
+       errtemp=Kernel_ridge_regression_cubexp_parameters (Xn , Yn , L , S , M , nv , prop);
        errall(size(errall,1)+1,1)=errtemp;
        lambdaall(size(lambdaall,1)+1,1)=L;
        sigmaall(size(sigmaall,1)+1,1)=S;
@@ -95,6 +98,11 @@ for l=1:step
        end
    end
 end
+
+
+%Let's note that the servor doesn't do the scatters by itself, so that it
+%has to be launched afterwards on the computer (but it ain't no problem for
+%the servor for running the script).
 
 figure(1);
 subplot(2,2,1);
@@ -115,8 +123,6 @@ ylabel('erreurs obtenues');
 
 out1=[err,lambdaf,sigmaf,muf];
 out2=[errall,lambdaall,sigmaall,muall];
-
-toc;
 
 end
 
