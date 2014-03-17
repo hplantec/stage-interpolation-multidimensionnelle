@@ -4,14 +4,22 @@
 % number of data sets on which this function calculate the mean error nv
 % and the proportion p of trained elements out of all the elements
 
-function[err] = Kernel_ridge_regression_cubexp_parameters (X , Y , lambda , sigma , mu , nv , p)
+function[err] = Kernel_ridge_regression_cubexp_parameters_dimensions(X , Y , lambda , sigma , mu , nv , p)
 
-k=@(x,y) (x*y').^3 + mu*exp(-(x*ones(1,size(y,1))-ones(size(x,1),1)*y').^2/(2*sigma^2));
+k=@(x,y) (x(:,3)*y(:,3)').^3 + mu*exp(-pdist2(x,y)/(2*sigma^2));
 n = size(X,1); pn = floor(p*n);
 erreur = zeros(nv,1);
 
- for s = 1 : nv
-    [Xtr,Xte,Ytr,Yte]=split(X,Y,0.9);
+for s = 1 : nv
+    L1 = transpose(randperm(n));
+    L2 = transpose(1 : pn);
+    L3 = transpose(pn+1 : n);
+    L = L1(L2,1);
+    Xtr = X(L,:);
+    Ytr = Y(L,4);
+    L = L1(L3,1);
+    Xte = X(L,:);
+    Yte = Y(L,4);
     
     Ktrtr=k(Xtr,Xtr);
     A=(Ktrtr+(lambda*pn*eye(pn)))\Ytr;
