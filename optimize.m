@@ -5,7 +5,7 @@
 function[answer] = optimize(X, Y, nv, p)
 
 for sigma = 0.1 : 0.1 : 3
-    for ll = 1 : 20
+    for ll = 1 : 16
         L1(10*sigma,ll) = sigma;
         M1(10*sigma,ll) = ll;
         N1(10*sigma,ll) = moy(X, Y, 10^(-ll), sigma, nv, p);
