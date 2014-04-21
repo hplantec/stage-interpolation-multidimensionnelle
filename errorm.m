@@ -8,8 +8,7 @@
 
 function[err] = errorm(Xtr, Ytr, Xte, Yte, lambda, sigma)
 
-L = chol(Xtr'*Xtr);
-A = L\(L'\(Xtr'*Ytr));
+A = (Xtr'*Xtr)\(Xtr'*Ytr);
 Ztr = Ytr - Xtr*A;
 Zte = Yte - Xte*A;
 % We have just trained linearly on (Xtr,Ytr).
@@ -19,8 +18,7 @@ k=@(x,y) exp(-pdist2(x,y).^2/(2*sigma^2));
 n = size(Xtr,1);
 Ktrtr = k(Xtr,Xtr);
 Ktetr = k(Xte,Xtr);
-V = chol(Ktrtr + lambda*n*eye(n));
-B = V\(V'\Ztr);
+B = (Ktrtr + lambda*n*eye(n))\Ztr;
 erreur_absolue = Zte - Ktetr*B;
 % Here, we trained on this error with Kernel Ridge Regression.
 
