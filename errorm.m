@@ -25,6 +25,6 @@ erreur_absolue = Zte - Ktetr*B;
 % Here, we trained on this error with Kernel Ridge Regression.
 
 erreur_relative = (erreur_absolue)./Yte;
-err = mean(abs(erreur_relative));
+err = [mean(abs(erreur_relative)),sqrt(mean((erreur_relative).^2)),max(abs(erreur_relative))];
 % Finally, err contains the relative error of the final prediction, the
 % goal being to minimize it.

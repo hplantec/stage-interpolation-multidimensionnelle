@@ -1,14 +1,15 @@
 % The function optimize returns the optimal values of sigma and
-% -log10(lambda), using the function moy.
-% We can use this function writting: "optimize(X, Y, nv, p)".
+% -log10(lambda), using the function moy, for the error L1, L2 or Linf according to i.
+% We can use this function writting: "optimize(X, Y, nv, p, i)".
 
-function[answer] = optimize(X, Y, nv, p)
+function[answer] = optimize(X, Y, nv, p, i)
 
 for sigma = 0.1 : 0.1 : 3
     for ll = 1 : 16
         L1(floor(10*sigma+.5),ll) = sigma;
         M1(floor(10*sigma+.5),ll) = ll;
-        N1(floor(10*sigma+.5),ll) = moy(X, Y, 10^(-ll), sigma, nv, p);
+        m = moy(X, Y, 10^(-ll), sigma, nv, p);
+        N1(floor(10*sigma+.5),ll) = m(1,i);
     end
 end
 
@@ -22,7 +23,8 @@ for sigma = L1(coef1)-0.05 : 0.01 : L1(coef1)+0.05;
     for ll = M1(coef1)-0.5 : 0.1 : M1(coef1)+0.5;
         L2(floor(100*sigma - 100*L1(coef1) + 6+.5),floor(10*ll - 10*M1(coef1)+6+.5)) = sigma;
         M2(floor(100*sigma - 100*L1(coef1) + 6+.5),floor(10*ll - 10*M1(coef1)+6+.5)) = ll;
-        N2(floor(100*sigma - 100*L1(coef1) + 6+.5),floor(10*ll - 10*M1(coef1)+6+.5)) = moy(X, Y, 10^(-ll), sigma, nv, p);
+        m = moy(X, Y, 10^(-ll), sigma, nv, p);
+        N2(floor(100*sigma - 100*L1(coef1) + 6+.5),floor(10*ll - 10*M1(coef1)+6+.5)) = m(1,i);
     end
 end
 
@@ -35,7 +37,8 @@ for sigma = L2(coef2)-0.005 : 0.001 : L2(coef2)+0.005;
     for ll = M2(coef2)-0.05 : 0.01 : M2(coef2)+0.05;
         L3(floor(1000*sigma - 1000*L2(coef2) + 6+.5),floor(100*ll - 100*M2(coef2) + 6+.5)) = sigma;
         M3(floor(1000*sigma - 1000*L2(coef2) + 6+.5),floor(100*ll - 100*M2(coef2) + 6+.5)) = ll;
-        N3(floor(1000*sigma - 1000*L2(coef2) + 6+.5),floor(100*ll - 100*M2(coef2) + 6+.5)) = moy(X, Y, 10^(-ll), sigma, nv, p);
+        m = moy(X, Y, 10^(-ll), sigma, nv, p);
+        N3(floor(1000*sigma - 1000*L2(coef2) + 6+.5),floor(100*ll - 100*M2(coef2) + 6+.5)) = m(1,i);
     end
 end
 
