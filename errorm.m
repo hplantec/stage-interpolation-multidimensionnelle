@@ -8,11 +8,13 @@
 
 function[err] = errorm(Xtr, Ytr, Xte, Yte, lambda, sigma)
 
-A = (Xtr'*Xtr)\(Xtr'*Ytr);
-Ztr = Ytr - Xtr*A;
-Zte = Yte - Xte*A;
+Xtr1 = [Xtr,ones(size(Xtr,1),1)];
+Xte1 = [Xte,ones(size(Xte,1),1)];
+A = (Xtr1'*Xtr1)\(Xtr1'*Ytr);
+Ztr = Ytr - Xtr1*A;
+Zte = Yte - Xte1*A;
 % We have just trained linearly on (Xtr,Ytr).
-% Ztr is the error between the value Yte and her linear prediction.
+% Ztr is the error between the value Zte and her linear prediction.
 
 k=@(x,y) exp(-pdist2(x,y).^2/(2*sigma^2));
 n = size(Xtr,1);
