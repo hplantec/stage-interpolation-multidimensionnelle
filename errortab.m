@@ -5,7 +5,7 @@ clear all
 load('datav3.mat')
 
 for  i = 1 : 100
-    erreur(i,:) = [i/100,moy(X,Y,10^-11.38, 2, 10 ,i/100)];
+    erreur(i,:) = [i/100,moy(X,Y,1.5*10^-5, 1.37, 10 ,i/100)];
 end
 
 erreur

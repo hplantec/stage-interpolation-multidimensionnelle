@@ -1,8 +1,9 @@
 
 
 load('datav3.mat')
-X = X(: , 2 : 8);
-Y = Y(:,4);
+
+X = zscore(X(: , 2 : 8));
+Y = zscore(Y(:,4));
 n = size(Y,1);
 sigma = 1.37;
 lambda = 1.5*10^-5;
