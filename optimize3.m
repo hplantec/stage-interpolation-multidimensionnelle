@@ -2,7 +2,7 @@
 % -log10(lambda), using the function moy, for the error L1, L2 or Linf according to i, testing moy np times with np different coefficients.
 % We can use this function writting: "optimize2(X, Y, nv, p, np, i)".
 
-function[answer] = optimize2(X, Y, nv, p, np)
+function[answer] = optimize3(X, Y, nv, p, np)
 
 sigma = 3*rand(np,1)+1;
 ll = 6*rand(np,1)+3;
