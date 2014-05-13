@@ -1,6 +1,6 @@
 
 
-function[erm] = moy2(X, H, Y, lambda, sigma, nv, p)
+function[erm] = moy2(X, H, Y, lambda1,lambda2, sigma1, sigma2, nv, p)
 
 n = size(X,1); pn = floor(p*n);
 erm = 0;
@@ -27,7 +27,7 @@ for s = 1 : nv  % nv regressions
     Yte = Y(L,:);
     % the proportion of (Xte,Yte) in (X,Y) is 1-p.
     
-    erm = erm + errorm2(Xtr, Htr, Ytr, Xte, Hte, Yte, lambda, sigma);
+    erm = erm + errorm2(Xtr, Htr, Ytr, Xte, Hte, Yte, lambda1, lambda2, sigma1, sigma2);
     % erm is the sum of the errors of all the predictions.
 end
 
