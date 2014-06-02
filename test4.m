@@ -14,7 +14,8 @@ c = (45*rand(100,1)+5) *10^-4;
 p = 0.8;
     
     for i=1:100
-        resultat(i,:) = asymetrique_cross(X, Y, 10^-ll(i) , sigma(i), c(i), nv, p)
+        resultat(i,:) = asymetrique_cross(X, Y, 10^-ll(i) , sigma(i), c(i), nv, p);
+        printf('%d%%\r',i);
     end
 
 opt = [ll,sigma,c,resultat];
