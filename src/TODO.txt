@@ -1,0 +1,4 @@
+- descente de gradient.
+- Kernel if (a+bh + ch², a+bh)
+- pred sur annee
+- bayésien (incertude)
