@@ -18,7 +18,7 @@ T = 1;
 while T == 1
     V = g(A);
     A = A-f(A)*V/h(A);
-    if max(abs(V))<10^-2
+    if max(abs(V))<10^-3
         T=0;
     end
 end
