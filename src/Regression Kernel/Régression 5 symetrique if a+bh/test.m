@@ -1,7 +1,7 @@
 
 load datav3
 load outliers_63
-H = zscore(X(:,3)-70);
+H = X(:,3);
 X = zscore(X(:,[2,4:8]));
 Y = Y(:,4);
 
