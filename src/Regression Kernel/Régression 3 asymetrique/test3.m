@@ -23,5 +23,5 @@ opt = [ll,sigma,c,resultat];
 figure(1)
 scatter(opt(:,4),opt(:,5))
 xlabel('erreur')
-ylabel('proportion de points de au-dessus')
+ylabel('proportion de points au-dessus')
 title(['Compromis à p=',num2str(p)])
