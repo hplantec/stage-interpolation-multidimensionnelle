@@ -1,4 +1,4 @@
-- descente de gradient.
-- Kernel if (a+bh + ch², a+bh)
+- descente de gradient avec newton et fminunc		fait
+- Kernel if a+bh					fait
 - pred sur annee
 - bayésien (incertude)
