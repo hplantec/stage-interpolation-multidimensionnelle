@@ -27,7 +27,7 @@ for s = 1 : nv  % nv regressions
     Yte = Y(L,:);
     % the proportion of (Xte,Yte) in (X,Y) is 1-p.
     
-    errorm = 1-pred(Xtr,Htr,Ytr,Xte,Hte,lambda,sigma1,sigma2,sigma3)./Yte;
+    errorm = 1-pred2(Xtr,Htr,Ytr,Xte,Hte,lambda,sigma1,sigma2,sigma3)./Yte;
     erm = erm + [mean(abs(errorm)),sqrt(mean(errorm.^2)),max(abs(errorm))];
     % erm is the sum of the errors of all the predictions.
 end
