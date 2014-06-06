@@ -16,6 +16,7 @@ sigma2 = 7.1967;
 sigma3 = 8.8058;
 
 Yte = pred(Xtr,Htr,Ytr,Xte,Hte,lambda,sigma1,sigma2,sigma3);
+figure(1)
 plot(Hte,Yte)
 %%
 k1=@(x,y) exp(-pdist2(x,y).^2/(2*sigma1^2));
@@ -38,3 +39,7 @@ Yte = (Ktetr1 + ((Hte-70)*(Htr-70)').*Ktetr2)*C;
 hold on
 plot(Hte,Yte,'r')
 hold off
+legend('regression avec if','prediction sans if')
+xlabel('hauteur')
+ylabel('prix')
+title('regression y=a+b*h avec if h<70')
