@@ -3,8 +3,22 @@ function[Yte] = predif2(Xtr,Htr,Ytr,Xte,Hte,lambda,sigma1,sigma2,sigma3)
 
 
 k1=@(x,y) exp(-pdist2(x,y).^2/(2*sigma1^2));
-k2=@(x,y) exp(-pdist2(x,y).^2/(2*sigma2^2));
-k3=@(x,y) exp(-pdist2(x,y).^2/(2*sigma3^2));
+
+% Gaussian kernels:
+% k2=@(x,y) exp(-pdist2(x,y).^2/(2*sigma2^2));
+% k3=@(x,y) exp(-pdist2(x,y).^2/(2*sigma3^2));
+
+% Monomial Kernels:
+% k2=@(x,y) (x*y'+sigma2).^2;
+% k3=@(x,y) (x*y'+sigma3).^2
+
+% Matérn Kernels with nu=3/2:
+% k2=@(x,y) (1+sqrt(3)*pdist2(x,y)/sigma2).*exp(-sqrt(3)*pdist2(x,y)/sigma2);
+% k3=@(x,y) (1+sqrt(3)*pdist2(x,y)/sigma3).*exp(-sqrt(3)*pdist2(x,y)/sigma3);
+
+% Matérn Kernels with nu=5/2:
+k2=@(x,y) (1+sqrt(3)*pdist2(x,y)/sigma2+5*pdist2(x,y).^2/(3*sigma2^2)).*exp(-sqrt(5)*pdist2(x,y)/sigma2);
+k3=@(x,y) (1+sqrt(3)*pdist2(x,y)/sigma3+5*pdist2(x,y).^2/(3*sigma3^2)).*exp(-sqrt(5)*pdist2(x,y)/sigma3);
 
 n = size(Xtr,1);
 
