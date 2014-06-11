@@ -2,10 +2,10 @@
 
 function[opt] = optimizeif(X, H, Y, nv, nr, p)
 
-ll = 4*rand(nr,1)+1;
-sigma1 = 20*rand(nr,1)+1;
-sigma2 = 20*rand(nr,1)+1;
-sigma3 = 20*rand(nr,1)+1;
+ll = 2*rand(nr,1)+3;
+sigma1 = 13*rand(nr,1)+2;
+sigma2 = 10*rand(nr,1)+5;
+sigma3 = 8*rand(nr,1)+6;
 
 for i = 1 : nr
     erreur(i,:) = moyif(X, H, Y, 10^-ll(i), sigma1(i), sigma2(i), sigma3(i), nv, p);
