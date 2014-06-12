@@ -1,4 +1,8 @@
 - descente de gradient avec newton et fminunc		fait
 - Kernel if a+bh					fait
-- pred sur annee
-- bayésien (incertude)
+- fusionner pred sur annee et Kernel if a+bh (pour avoir le max de données possibles): apprendre sur les années 1 à n pour prévoir sur l'année n
+- bayésien (incertitude)
+- Ajouter l'asymétrique sur la régression if a+bh
+- préparer la soutenance
+- préparer le rapport
+- coder sous excel
