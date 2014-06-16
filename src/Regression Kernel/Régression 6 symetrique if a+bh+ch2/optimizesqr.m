@@ -3,9 +3,9 @@
 function[opt] = optimizesqr(X, H, Y, nv, nr, p)
 
 ll = 6*rand(nr,1)+4;
-sigma1 = 10*rand(nr,1);
+sigma1 = 10*rand(nr,1)+0.2;
 sigma2 = 50*rand(nr,1);
-sigma3 = 50*rand(nr,1);
+sigma3 = 45*rand(nr,1)+5;
 sigma4 = 50*rand(nr,1);
 
 for i = 1 : nr
@@ -13,4 +13,4 @@ for i = 1 : nr
     fprintf('%d%%\r', round(i/nr*100))
 end
 
-opt = [ll,sigma1,sigma2,sigma3,erreur];
+opt = [ll,sigma1,sigma2,sigma3,sigma4,erreur];
