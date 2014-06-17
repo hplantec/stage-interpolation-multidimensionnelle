@@ -8,7 +8,7 @@ X = zscore(X(:,[2,4:8]));
 Y = Y(:,4);
 
 nv = 4;
-nr = 1000;
+nr = 100;
 p = 0.8;
 
 tic; opt = optimizesqr(X, H, Y, nv, nr, p); toc
