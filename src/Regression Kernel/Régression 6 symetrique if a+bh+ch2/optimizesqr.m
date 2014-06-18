@@ -8,10 +8,10 @@ function[opt] = optimizesqr(X, H, Y, nv, nr, p)
 % sigma3 = 45*rand(nr,1)+5;
 % sigma4 = 50*rand(nr,1);
 ll = 3*rand(nr,1)+5;
-sigma1 = 2*rand(nr,1)+3;
+sigma1 = 50*rand(nr,1);
 sigma2 = 20*rand(nr,1)+30;
 sigma3 = 15*rand(nr,1)+10;
-sigma4 = 15*rand(nr,1);
+sigma4 = rand(nr,1);
 
 for i = 1 : nr
     erreur(i,:) = moysqr(X, H, Y, 10^-ll(i), sigma1(i), sigma2(i), sigma3(i), sigma4(i), nv, p);

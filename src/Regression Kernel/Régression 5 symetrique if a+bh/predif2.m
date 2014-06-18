@@ -31,10 +31,12 @@ Ktetr1 = k1(Xte,Xtr);
 Ktetr2 = k2(Xte,Xtr);
 Ktetr3 = k3(Xte,Xtr);
 
+Htr=Htr-70;
+Hte=Hte-70;
 Htrp = 1/2*Htr+1/2*abs(Htr);
 Htrm = 1/2*Htr-1/2*abs(Htr);
 Htep = 1/2*Hte+1/2*abs(Hte);
 Htem = 1/2*Hte-1/2*abs(Hte);
 
-C = (Ktrtr1 + ((Htrp-70)*(Htrp-70)').*Ktrtr2 + ((Htrm-70)*(Htrm-70)').*Ktrtr3 + lambda*n*eye(n))\Ytr;
-Yte = (Ktetr1 + ((Htep-70)*(Htrp-70)').*Ktetr2 + ((Htem-70)*(Htrm'-70)).*Ktetr3)*C;
+C = (Ktrtr1 + (Htrp*Htrp').*Ktrtr2 + (Htrm*Htrm').*Ktrtr3 + lambda*n*eye(n))\Ytr;
+Yte = (Ktetr1 + (Htep*Htrp').*Ktetr2 + (Htem*Htrm').*Ktetr3)*C;
