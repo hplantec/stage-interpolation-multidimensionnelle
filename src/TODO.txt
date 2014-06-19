@@ -1,8 +1,23 @@
-- descente de gradient avec newton et fminunc		fait
-- Kernel if a+bh					fait
-- fusionner pred sur annee et Kernel if a+bh (pour avoir le max de données possibles): apprendre sur les années 1 à n pour prévoir sur l'année n
-- bayésien (incertitude)
-- Ajouter l'asymétrique sur la régression if a+bh
-- préparer la soutenance
-- préparer le rapport
-- coder sous excel
+Sur matlab:
+-faire un script avec le coût asymétrique pour la régression if a+bh
+-faire un fichier compromis_c pour cette régression
+-faire des scripts avec coût asymétrique pour donner des résultats pour d'autres méthodes
+-faire un script pour lancer des calculs sur les différentes méthodes utilisées (donc renommer TOUS les fichiers du github ou presque..)
+-refaire les .jpg de la soutenance avec des legend title et label plus gros pour la lisibilité
+
+Sur beamer:
+-rajouter les modifications conseillées lors de la répétition
+-rajouter la bibliographie
+-rajouter les nouvelles versions des .jpg lorsqu'ils seront faits
+-GP?
+
+Sur papier:
+-faire les GP pour les implémenter ensuite
+
+Sur excel:
+-préparer toutes les feuilles du classeur sauf la 2 (où on stocke les variables)
+-lorsqu'on aura eu le retour de l'industriel sur le fichier compromis_c: refaire la version "finale" de l'algorithme à rendre
+
+sur latex:
+-faire le rapport
+
